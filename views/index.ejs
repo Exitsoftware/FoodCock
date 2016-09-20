@@ -1,0 +1,72 @@
+<!Doctype html>
+<html>
+    <head>
+        <title>FoodCock</title>
+        <meta name="viewport" content="width=device-width, user-scalable=no">
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.js"></script>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/xeicon/2/xeicon.min.css">
+    </head>
+    <style>
+        @import url(https://cdn.rawgit.com/theeluwin/NotoSansKR-Hestia/master/stylesheets/NotoSansKR-Hestia.css);
+        *{
+            margin: 0 auto;
+            font-family:'Noto Sans Korean';
+        }
+        #title{
+            text-align: center;
+            background: white;
+            padding: 14px;
+            
+        }
+        .card{
+            box-shadow: 0px 0px 3px rgba(0,0,0,0.3);
+            padding: 20px;
+            background: white;
+            width: 80%;
+            margin: 15px auto;
+        }
+    </style>
+    <script>
+        $(document).ready(function(){
+            var resData;
+            $.get('/test', function(res){
+                console.log(res);
+                resData = res;
+                
+                $('body').append($('<h1>').text(resData.place));
+            
+                for(var i = 0; i < resData.data.length; i++){
+                    var element = resData.data[i];
+                    var type = element.type;
+                    var card = $('<div>').addClass('card');
+                    card.append($('<h1>').text(type));
+                    console.log()
+                    for(var j = 0; j < element.menus.length; j++){
+                        var menus = element.menus[j];
+                        console.log(menus);
+                        var name =  menus.menu;
+                        var price = menus.price;
+                        card.append($('<h2>').text(name));
+                        card.append($('<h3>').text(price));
+                        card.append($('<br>'));
+                    }
+                    $('body').append(card);
+                }
+                
+                
+                
+                
+            })
+            
+            
+            
+            
+        })
+    </script>
+    <body>
+        <div id="title">
+            <h3>푸드콕</h3>
+        </div>
+        <div id="context"></div>
+    </body>
+</html>
