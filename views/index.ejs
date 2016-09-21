@@ -99,44 +99,49 @@
         }
         $(document).ready(function(){
             
+            var d = new Date();
+            var year = d.getFullYear();
+            var month = d.getMonth();
+            var date = d.getDate();
+            
             $('#menu').hide();
             $('#btn_menu').click(function(){
                 $('#menu').slideToggle('fast');
             });
             
             // Initialize Data
-            $.get('/test', {placeCode: '254'}).done(function(res){
+            $.get('/test', {year: year, month: month, date: date, placeCode: '254'}).done(function(res){
                 parseData(res);
             });
             
             
             
             $('#btn_professor').click(function(){
-                $.get('/test', {placeCode: '254'}).done(function(res){
+                $.get('/test', {year: year, month: month, date: date, placeCode: '254'}).done(function(res){
                     parseData(res);
                 })
             });
             
             $('#btn_student').click(function(){
-                $.get('/test', {placeCode: '255'}).done(function(res){
+                $.get('/test', {year: year, month: month, date: date, placeCode: '255'}).done(function(res){
                     parseData(res);
                 })
             });
             
             $('#btn_dorm').click(function(){
-                $.get('/test', {placeCode: '256'}).done(function(res){
+                $.get('/test', {year: year, month: month, date: date, placeCode: '256'}).done(function(res){
                     parseData(res);
                 })
             });
             
             $('#btn_foodcourt').click(function(){
-                $.get('/test', {placeCode: '257'}).done(function(res){
+                $.get('/test', {year: year, month: month, date: date, placeCode: '257'}).done(function(res){
                     parseData(res);
                 })
             });
             
             $('#btn_center').click(function(){
-                $.get('/test', {placeCode: '258'}).done(function(res){
+                $.get('/test', {year: year, month: month, date: date, placeCode: '258'}).done(function(res){
                     parseData(res);
                 })
             });

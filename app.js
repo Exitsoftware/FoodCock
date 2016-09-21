@@ -48,6 +48,10 @@ app.get('/test',function(req, page_res){
     console.log(req.query);
     
     var place = req.query.placeCode;
+    var year = req.query.year;
+    var month = req.query.month;
+    var date = req.query.date;
+    
     console.log(place);
     var url = 'http://www.hanyang.ac.kr/web/www/-'+place+'?p_p_id=foodView_WAR_foodportlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=2&_foodView_WAR_foodportlet_sFoodDateDay='+date+'&_foodView_WAR_foodportlet_sFoodDateYear='+year+'&_foodView_WAR_foodportlet_action=view&_foodView_WAR_foodportlet_sFoodDateMonth='+month;
     
