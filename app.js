@@ -61,10 +61,15 @@ app.get('/test',function(req, page_res){
             var $ = cheerio.load(res.body);
             var place = $('.sub-head').children('h3').text();
             var list = $('.d-title2');
-            var type = $('.thumbnails')
+            var type = $('.thumbnails');
+            var day = $('.day-selc');
+            day = day.text().replace(/\t/gi,'').replace(/\r/gi,'').split('\n');
+            day = day[2]+' '+day[3];
+            console.log(day);
             console.log(place);
-
+            
             sendData.place = place;
+            sendData.day = day;
             sendData.data = [];
 
             for(var i = 0; i < type.length; i++){

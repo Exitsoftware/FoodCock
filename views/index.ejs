@@ -48,6 +48,11 @@
             text-align: center;
             color: rgba(255, 255, 255, 0.7);
         }
+        #footer{
+            padding: 30px;
+            background: #4e5665;
+            color: lightgray;
+        }
         .card{
             box-shadow: 0px 0px 3px rgba(0,0,0,0.3);
             padding: 20px;
@@ -70,6 +75,7 @@
             var resData = res;
 
             $('#place').text(resData.place);
+            $('#day').text(resData.day);
             $('#context').html(' ');
 
             for(var i = 0; i < resData.data.length; i++){
@@ -160,7 +166,12 @@
         </div>
         <div id="tab">
             <h2 id="place"></h2>
+            <h4 id="day"></h4>
         </div>
         <div id="context"></div>
+        <div id="footer">
+			<h3>FoodCock</h3>
+			<h6>© 2016 Copyrights ExitSoftware of Na Yunhwan</h6>
+		</div>
     </body>
 </html>
