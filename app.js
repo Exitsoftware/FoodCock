@@ -32,53 +32,67 @@ app.use('/users', users);
 
 console.log('Server Start');
 
-var url = 'http://www.hanyang.ac.kr/web/www/-256#none';
 
-var sendData = {};
-
-request.get(url, function(err, res, next){
-    if(err) console.log(err);
-    else{
-        
-        var $ = cheerio.load(res.body);
-        var place = $('.sub-head').children('h3').text();
-        var list = $('.d-title2');
-        var type = $('.thumbnails')
-        console.log(place);
-        
-        sendData.place = place;
-        sendData.data = [];
-        
-        for(var i = 0; i < type.length; i++){
-            var title = $(list[i]).text();
-            
-            sendData.data.push({});
-            var currentData = sendData.data[i];
-            currentData.type = title;
-            currentData.menus = [];
-            
-            var element = $(type[i]).children('.span3').children('.thumbnail');;
-            for(var j = 0; j < element.length; j++){
-                
-                var set = {};
-                var temp = $(element[j])
-                var menu = temp.children('h3').text();
-                var price = temp.children('.price').text();
-                set.menu = menu;
-                set.price = price;
-                console.log(set);
-                currentData.menus.push(set);
-            }  
-        }
-
-    }
-    console.log(sendData);
-})
+var d = new Date();
+var month = d.getMonth();
+var date = d.getDate();
+var year = d.getFullYear();
+console.log(year);
+var place = 255;
 
 
-app.get('/test',function(req, res){
-    res.send(sendData);
+
+
+
+app.get('/test',function(req, page_res){
+    console.log(req.query);
     
+    var place = req.query.placeCode;
+    console.log(place);
+    var url = 'http://www.hanyang.ac.kr/web/www/-'+place+'?p_p_id=foodView_WAR_foodportlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=2&_foodView_WAR_foodportlet_sFoodDateDay='+date+'&_foodView_WAR_foodportlet_sFoodDateYear='+year+'&_foodView_WAR_foodportlet_action=view&_foodView_WAR_foodportlet_sFoodDateMonth='+month;
+    
+    console.log(url);
+    
+    var sendData = {};
+    request.get(url, function(err, res, next){
+        if(err) console.log(err);
+        else{
+
+            var $ = cheerio.load(res.body);
+            var place = $('.sub-head').children('h3').text();
+            var list = $('.d-title2');
+            var type = $('.thumbnails')
+            console.log(place);
+
+            sendData.place = place;
+            sendData.data = [];
+
+            for(var i = 0; i < type.length; i++){
+                var title = $(list[i]).text();
+
+                sendData.data.push({});
+                var currentData = sendData.data[i];
+                currentData.type = title;
+                currentData.menus = [];
+
+                var element = $(type[i]).children('.span3').children('.thumbnail');;
+                for(var j = 0; j < element.length; j++){
+
+                    var set = {};
+                    var temp = $(element[j])
+                    var menu = temp.children('h3').text();
+                    var price = temp.children('.price').text();
+                    set.menu = menu;
+                    set.price = price;
+                    console.log(set);
+                    currentData.menus.push(set);
+                }  
+            }
+
+        }
+        console.log(sendData);
+        page_res.send(sendData);
+    })
 })
 
 // catch 404 and forward to error handler

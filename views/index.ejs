@@ -13,50 +13,127 @@
             font-family:'Noto Sans Korean';
         }
         #title{
+                width: 100%;
+                position: fixed;
+                z-index: 99999999999999999;
+                padding: 15px 10px;
+                background: white;
+                opacity: 0.95;
+                color: rgba(0, 50, 120, 0.7);
+                text-align: center;
+                box-shadow: 0px 3px 10px rgba(0,0,0,0.3);
+        }
+        #title_msg{
+            display:inline-block;
+            margin-left:-25px;
+        }
+        #menu{
+                text-align: left;
+        }
+        
+        #menu > ul{
+                list-style: none;
+                margin: 0px;
+                padding: 0px;
+        }
+        #menu > ul > li{
+            margin: 3px 20px;
+        }
+        #tab{
+            padding: 50px;
+            padding-top: 80px;
+            padding-bottom: 30px;
+    
+            background: #1b6ed3;
             text-align: center;
-            background: white;
-            padding: 14px;
-            
+            color: rgba(255, 255, 255, 0.7);
         }
         .card{
             box-shadow: 0px 0px 3px rgba(0,0,0,0.3);
             padding: 20px;
+            color: rgba(0, 0, 0, 0.5);
             background: white;
             width: 80%;
             margin: 15px auto;
         }
+        .left{
+                float: left;
+        }
+        .clear{
+            clear: both;
+        }
     </style>
     <script>
-        $(document).ready(function(){
-            var resData;
-            $.get('/test', function(res){
-                console.log(res);
-                resData = res;
-                
-                $('body').append($('<h1>').text(resData.place));
-            
-                for(var i = 0; i < resData.data.length; i++){
-                    var element = resData.data[i];
-                    var type = element.type;
-                    var card = $('<div>').addClass('card');
-                    card.append($('<h1>').text(type));
-                    console.log()
-                    for(var j = 0; j < element.menus.length; j++){
-                        var menus = element.menus[j];
-                        console.log(menus);
-                        var name =  menus.menu;
-                        var price = menus.price;
-                        card.append($('<h2>').text(name));
-                        card.append($('<h3>').text(price));
-                        card.append($('<br>'));
-                    }
-                    $('body').append(card);
+        
+        function parseData(res){
+            console.log(res);
+            var resData = res;
+
+            $('#place').text(resData.place);
+            $('#context').html(' ');
+
+            for(var i = 0; i < resData.data.length; i++){
+                var element = resData.data[i];
+                var type = element.type;
+                var card = $('<div>').addClass('card');
+                card.append($('<h2>').text(type));
+                console.log()
+                for(var j = 0; j < element.menus.length; j++){
+                    var menus = element.menus[j];
+                    console.log(menus);
+                    var name =  menus.menu;
+                    var price = menus.price;
+                    card.append($('<br>'));
+                    card.append($('<p>').text(name));
+                    card.append($('<h3>').text(price));
+                    
                 }
-                
-                
-                
-                
-            })
+                $('#context').append(card);
+            }
+        }
+        $(document).ready(function(){
+            
+            $('#menu').hide();
+            $('#btn_menu').click(function(){
+                $('#menu').slideToggle('fast');
+            });
+            
+            // Initialize Data
+            $.get('/test', {placeCode: '254'}).done(function(res){
+                parseData(res);
+            });
+            
+            
+            
+            $('#btn_professor').click(function(){
+                $.get('/test', {placeCode: '254'}).done(function(res){
+                    parseData(res);
+                })
+            });
+            
+            $('#btn_student').click(function(){
+                $.get('/test', {placeCode: '255'}).done(function(res){
+                    parseData(res);
+                })
+            });
+            
+            $('#btn_dorm').click(function(){
+                $.get('/test', {placeCode: '256'}).done(function(res){
+                    parseData(res);
+                })
+            });
+            
+            $('#btn_foodcourt').click(function(){
+                $.get('/test', {placeCode: '257'}).done(function(res){
+                    parseData(res);
+                })
+            });
+            
+            $('#btn_center').click(function(){
+                $.get('/test', {placeCode: '258'}).done(function(res){
+                    parseData(res);
+                })
+            });
             
             
             
@@ -65,7 +142,24 @@
     </script>
     <body>
         <div id="title">
-            <h3>푸드콕</h3>
+            <h3 id="title_msg" >푸드콕</h3>
+            <h3 id="btn_menu" class="left" style="display:inline-block"><i class="xi-bars"></i></h3>
+            <div id="menu">
+                </br>
+                <hr style="width:80%"></hr>
+                </br>
+
+                <ul>
+                    <li id="btn_professor">교직원식당</li>
+                    <li id="btn_student">학생식당</li>
+                    <li id="btn_dorm">창의인재원식당</li>
+                    <li id="btn_foodcourt">푸드코트</li>
+                    <li id="btn_center">창업보육센터</li>
+                </ul>
+            </div>
+        </div>
+        <div id="tab">
+            <h2 id="place"></h2>
         </div>
         <div id="context"></div>
     </body>
