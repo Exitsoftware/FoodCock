@@ -41,8 +41,24 @@ console.log(year);
 var place = 255;
 
 
+var options = {
+    url: 'http://apis.skplanetx.com/weather/current/hourly?lon=126.8112500000&village=&county=&lat=37.3048100000&city=&version=1',
+    headers: {
+        'x-skpop-userId' : 'kbk9288@gmail.com',
+        'Accept': 'application/json',
+        'appKey': '7d604ba2-e3d2-3fb5-b516-505ee8db19f2'
+    }
+};
 
 
+app.get('/weather', function(req, res){
+    request.get(options, function(err, res, next){
+        if(err) console.log(err);
+        else{
+            console.log(res.body);
+        }
+    })
+})
 
 app.get('/test',function(req, page_res){
     console.log(req.query);
