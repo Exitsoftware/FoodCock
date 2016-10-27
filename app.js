@@ -58,7 +58,8 @@ app.get('/weather', function(req, res){
             console.log(res.body);
         }
     })
-})
+});
+
 
 app.get('/test',function(req, page_res){
     console.log(req.query);
